@@ -16,5 +16,5 @@ export const getTransactions = async () => {
     },
   });
 
-  return transactions;
+  return JSON.parse(JSON.stringify(transactions));
 };
