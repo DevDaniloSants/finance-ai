@@ -10,7 +10,13 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between border-b border-solid px-8 py-4">
       <div className="flex items-center gap-10">
-        <Image src="/logo.svg" alt="Finance Ai" width={173.57} height={39} />
+        <Image
+          src="/logo.svg"
+          alt="Finance Ai"
+          width={173.57}
+          height={39}
+          priority
+        />
         <Link
           href="/"
           className={`text-sm transition-colors duration-300 ${pathname === "/" ? "font-bold text-primary" : "text-muted-foreground hover:text-white"}`}

@@ -21,6 +21,7 @@ const LoginPage = async () => {
           width={173.57}
           height={39}
           className="mb-8"
+          priority
         />
         <h1 className="mb-3 text-4xl font-bold">Bem-vindo</h1>
         <p className="mb-8 text-muted-foreground">
