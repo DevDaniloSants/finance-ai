@@ -13,12 +13,13 @@ import {
 
 interface SummaryCardProps {
   month: string;
+  year: string;
 }
 
-const SummaryCards = async ({ month }: SummaryCardProps) => {
-  const depositsTotal = await getDepositsTotal({ month });
-  const expensesTotal = await getExpensesTotal({ month });
-  const investmentsTotal = await getInvestmentsTotal({ month });
+const SummaryCards = async ({ month, year }: SummaryCardProps) => {
+  const depositsTotal = await getDepositsTotal({ month, year });
+  const expensesTotal = await getExpensesTotal({ month, year });
+  const investmentsTotal = await getInvestmentsTotal({ month, year });
 
   const balance = depositsTotal - expensesTotal - investmentsTotal;
   return (

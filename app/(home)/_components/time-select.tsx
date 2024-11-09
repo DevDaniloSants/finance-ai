@@ -1,14 +1,7 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
 import { useRouter, useSearchParams } from "next/navigation";
+import CustomSelect from "./custom-select";
 
 const MONTH_OPTIONS = [
   {
@@ -61,33 +54,38 @@ const MONTH_OPTIONS = [
   },
 ];
 
-const TimeSelect = () => {
+const TimeSelect = ({ years }: { years: number[] }) => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
+  const year = searchParams.get("year");
+
+  const handleYearChange = (year: string) => {
+    if (month) {
+      push(`/?month=${month}&year=${year}`);
+    }
+  };
 
   const handleMonthChange = (month: string) => {
-    push(`/?month=${month}`);
+    if (year) {
+      push(`/?month=${month}&year=${year}`);
+    }
   };
 
   return (
-    <Select
-      onValueChange={(value) => handleMonthChange(value)}
-      defaultValue={month ?? ""}
-    >
-      <SelectTrigger className="w-[150px] rounded-full">
-        <SelectValue placeholder="Selecione o mês" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {MONTH_OPTIONS.map((month) => (
-            <SelectItem key={month.value} value={month.value}>
-              {month.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="flex items-center space-x-4">
+      <CustomSelect
+        time={month!}
+        handleTimeChange={handleMonthChange}
+        options={MONTH_OPTIONS}
+      />
+
+      <CustomSelect
+        time={year!}
+        handleTimeChange={handleYearChange}
+        options={years}
+      />
+    </div>
   );
 };
 
