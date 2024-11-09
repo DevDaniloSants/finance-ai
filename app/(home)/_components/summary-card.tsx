@@ -20,7 +20,9 @@ const SummaryCard = ({
   size = "small",
 }: SummaryCardProps) => {
   return (
-    <Card className={`${size === "large" ? "bg-white bg-opacity-5" : ""}`}>
+    <Card
+      className={`${size === "large" ? "bg-white bg-opacity-5" : "transition-colors duration-700 hover:bg-white hover:bg-opacity-5"}`}
+    >
       <CardHeader className="flex-row gap-2">
         <SummaryTypeBadge transactionType={transactionType}>
           {icon}
