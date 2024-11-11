@@ -1,9 +1,12 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 
 import { ReactNode } from "react";
 import SummaryTypeBadge from "./summary-type-badge";
 import AddTransactionButton from "@/app/_components/add-transaction-button";
 import { TransactionTypes } from "@prisma/client";
+import CountUp from "react-countup";
 
 interface SummaryCardProps {
   icon: ReactNode;
@@ -39,11 +42,21 @@ const SummaryCard = ({
         <p
           className={`font-bold ${size === "large" ? "text-4xl text-white" : "text-2xl"}`}
         >
-          {Intl.NumberFormat("pt-Br", {
-            style: "currency",
-            currency: "BRL",
-          }).format(amount)}
+          <CountUp
+            start={0}
+            end={amount}
+            duration={2}
+            useEasing={true}
+            decimals={2}
+            formattingFn={(value) =>
+              Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(value)
+            }
+          />
         </p>
+
         {size === "large" && <AddTransactionButton />}
       </CardContent>
     </Card>
