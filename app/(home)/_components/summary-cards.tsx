@@ -1,8 +1,3 @@
-import {
-  getDepositsTotal,
-  getExpensesTotal,
-  getInvestmentsTotal,
-} from "@/app/_data-access/transaction/get-transactions-summary";
 import SummaryCard from "./summary-card";
 import {
   PiggyBankIcon,
@@ -12,16 +7,18 @@ import {
 } from "lucide-react";
 
 interface SummaryCardProps {
-  month: string;
-  year: string;
+  depositsTotal: number;
+  expensesTotal: number;
+  investmentsTotal: number;
+  balance: number;
 }
 
-const SummaryCards = async ({ month, year }: SummaryCardProps) => {
-  const depositsTotal = await getDepositsTotal({ month, year });
-  const expensesTotal = await getExpensesTotal({ month, year });
-  const investmentsTotal = await getInvestmentsTotal({ month, year });
-
-  const balance = depositsTotal - expensesTotal - investmentsTotal;
+const SummaryCards = async ({
+  depositsTotal,
+  expensesTotal,
+  investmentsTotal,
+  balance,
+}: SummaryCardProps) => {
   return (
     <div className="space-y-6">
       <SummaryCard
@@ -32,21 +29,21 @@ const SummaryCards = async ({ month, year }: SummaryCardProps) => {
       />
       <div className="grid grid-cols-3 gap-6">
         <SummaryCard
-          transactionType="investment"
+          transactionType="INVESTMENT"
           icon={<PiggyBankIcon size={16} className="text-white" />}
           amount={investmentsTotal}
           title="Investido"
         />
         <SummaryCard
-          transactionType="expense"
+          transactionType="EXPENSE"
           icon={<TrendingUp size={16} className="text-primary" />}
-          amount={expensesTotal}
+          amount={depositsTotal}
           title="Receita"
         />
         <SummaryCard
-          transactionType="deposit"
+          transactionType="DEPOSIT"
           icon={<TrendingDown size={16} className="text-danger" />}
-          amount={depositsTotal}
+          amount={expensesTotal}
           title="Despesa"
         />
       </div>

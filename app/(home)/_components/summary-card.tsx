@@ -3,13 +3,14 @@ import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import { ReactNode } from "react";
 import SummaryTypeBadge from "./summary-type-badge";
 import AddTransactionButton from "@/app/_components/add-transaction-button";
+import { TransactionTypes } from "@prisma/client";
 
 interface SummaryCardProps {
   icon: ReactNode;
   title: string;
   amount: number;
   size?: "small" | "large";
-  transactionType?: string;
+  transactionType?: TransactionTypes;
 }
 
 const SummaryCard = ({

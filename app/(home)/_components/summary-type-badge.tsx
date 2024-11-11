@@ -1,8 +1,9 @@
 import { Badge } from "@/app/_components/ui/badge";
+import { TransactionTypes } from "@prisma/client";
 import { ReactNode } from "react";
 
 interface SummaryTypeBadgeProps {
-  transactionType?: string;
+  transactionType?: TransactionTypes;
   children: ReactNode;
 }
 
@@ -10,32 +11,24 @@ const SummaryTypeBadge = ({
   transactionType,
   children,
 }: SummaryTypeBadgeProps) => {
-  if (transactionType === "deposit") {
-    return (
-      <Badge className="rounded-[8px] bg-danger bg-opacity-10 p-2 hover:bg-danger hover:bg-opacity-10">
-        {children}
-      </Badge>
-    );
-  }
-  if (transactionType === "expense") {
-    return (
-      <Badge className="rounded-[8px] bg-muted p-2 hover:bg-muted">
-        {children}
-      </Badge>
-    );
-  }
-  if (transactionType === "investment") {
-    return (
-      <Badge className="rounded-[8px] bg-white bg-opacity-15 p-2 hover:bg-white hover:bg-opacity-15">
-        {children}
-      </Badge>
-    );
-  }
+  const getTypeBadge = () => {
+    if (transactionType === TransactionTypes.DEPOSIT) {
+      return " bg-danger bg-opacity-10  hover:bg-danger hover:bg-opacity-10";
+    }
+
+    if (transactionType === TransactionTypes.EXPENSE) {
+      return "bg-muted hover:bg-muted";
+    }
+
+    if (transactionType === TransactionTypes.INVESTMENT) {
+      return " bg-white bg-opacity-15 hover:bg-white hover:bg-opacity-15";
+    }
+
+    return "bg-black hover:bg-black ";
+  };
 
   return (
-    <Badge className="rounded-[8px] bg-slate-950 p-[10px] hover:bg-black">
-      {children}
-    </Badge>
+    <Badge className={`${getTypeBadge()} rounded-[8px] p-2`}>{children}</Badge>
   );
 };
 

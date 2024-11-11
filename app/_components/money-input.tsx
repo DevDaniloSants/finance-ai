@@ -4,7 +4,7 @@ import { Input, InputProps } from "./ui/input";
 
 type MoneyInputProps = NumericFormatProps<InputProps>;
 
-export const MoneyInput = forwardRef<HTMLInputElement, MoneyInputProps>(
+const MoneyInput = forwardRef<HTMLInputElement, MoneyInputProps>(
   (props, ref) => {
     return (
       <NumericFormat
