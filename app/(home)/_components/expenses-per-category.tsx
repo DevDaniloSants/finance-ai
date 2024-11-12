@@ -18,12 +18,9 @@ const ExpensesPerCategory = ({
         <hr className="border-white border-opacity-5" />
       </CardHeader>
       <CardContent className="space-y-3">
-        {totalExpensesPerCategory.map((item) => (
-          <>
-            <div
-              className="flex w-full items-center justify-between gap-2"
-              key={item.category}
-            >
+        {totalExpensesPerCategory.map((item, i) => (
+          <div key={`${item.category}-${i}`} className="flex flex-col gap-2">
+            <div className="flex w-full items-center justify-between">
               <p className="text-sm font-semibold">
                 {TRANSACTION_CATEGORY_LABELS[item.category]}
               </p>
@@ -36,7 +33,7 @@ const ExpensesPerCategory = ({
                 currency: "BRL",
               }).format(item.totalAmount)}
             </p>
-          </>
+          </div>
         ))}
       </CardContent>
     </ScrollArea>

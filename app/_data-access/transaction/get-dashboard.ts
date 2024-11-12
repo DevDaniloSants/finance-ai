@@ -1,7 +1,7 @@
 import "server-only";
 
 import { db } from "@/app/_lib/prisma";
-import { TransactionTypes } from "@prisma/client";
+import { Transaction, TransactionTypes } from "@prisma/client";
 import {
   TotalExpensesPerCategory,
   TransactionPercentagePerType,
@@ -125,6 +125,14 @@ export const getDashboard = async ({
     };
   });
 
+  const lastTransactions: Transaction[] = await db.transaction.findMany({
+    where,
+    orderBy: {
+      date: "desc",
+    },
+    take: 10,
+  });
+
   return {
     depositsTotal,
     expensesTotal,
@@ -132,5 +140,6 @@ export const getDashboard = async ({
     balance,
     typesPercentage,
     totalExpensesPerCategory,
+    lastTransactions,
   };
 };
