@@ -13,7 +13,10 @@ const ExpensesPerCategory = ({
 }: ExpensesPerCategoryProps) => {
   return (
     <ScrollArea className="col-span-2 h-full rounded-md border pb-6">
-      <CardHeader>Gastos por categoria</CardHeader>
+      <CardHeader className="space-y-6">
+        <p className="text-lg font-bold">Gastos por categoria</p>
+        <hr className="border-white border-opacity-5" />
+      </CardHeader>
       <CardContent className="space-y-3">
         {totalExpensesPerCategory.map((item) => (
           <>
