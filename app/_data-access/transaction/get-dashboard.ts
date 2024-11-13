@@ -1,11 +1,10 @@
-import "server-only";
-
 import { db } from "@/app/_lib/prisma";
 import { Transaction, TransactionTypes } from "@prisma/client";
 import {
   TotalExpensesPerCategory,
   TransactionPercentagePerType,
 } from "./types";
+import { auth } from "@clerk/nextjs/server";
 
 interface GetTransactionsSummaryProps {
   month: string;
@@ -16,7 +15,13 @@ export const getDashboard = async ({
   month,
   year,
 }: GetTransactionsSummaryProps) => {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
   const where = {
+    userId,
     date: {
       gte: new Date(`${year}-${month}-01`),
       lte: new Date(`${year}-${month}-31`),
@@ -27,10 +32,7 @@ export const getDashboard = async ({
     (
       await db.transaction.aggregate({
         where: {
-          date: {
-            gte: new Date(`${year}-${month}-01`),
-            lte: new Date(`${year}-${month}-31`),
-          },
+          ...where,
           type: "DEPOSIT",
         },
         _sum: {
@@ -44,10 +46,7 @@ export const getDashboard = async ({
     (
       await db.transaction.aggregate({
         where: {
-          date: {
-            gte: new Date(`${year}-${month}-01`),
-            lte: new Date(`${year}-${month}-31`),
-          },
+          ...where,
           type: "EXPENSE",
         },
         _sum: {
@@ -61,10 +60,7 @@ export const getDashboard = async ({
     (
       await db.transaction.aggregate({
         where: {
-          date: {
-            gte: new Date(`${year}-${month}-01`),
-            lte: new Date(`${year}-${month}-31`),
-          },
+          ...where,
           type: "INVESTMENT",
         },
         _sum: {
