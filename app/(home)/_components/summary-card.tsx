@@ -14,6 +14,7 @@ interface SummaryCardProps {
   amount: number;
   size?: "small" | "large";
   transactionType?: TransactionTypes;
+  userCanAddTransaction?: boolean;
 }
 
 const SummaryCard = ({
@@ -22,6 +23,7 @@ const SummaryCard = ({
   amount,
   transactionType,
   size = "small",
+  userCanAddTransaction,
 }: SummaryCardProps) => {
   return (
     <Card
@@ -57,7 +59,9 @@ const SummaryCard = ({
           />
         </p>
 
-        {size === "large" && <AddTransactionButton />}
+        {size === "large" && (
+          <AddTransactionButton userCanAddTransaction={userCanAddTransaction} />
+        )}
       </CardContent>
     </Card>
   );
